@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [message, setMessage] = useState('');
@@ -90,5 +90,19 @@ export default function SuccessPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">Loading...</h2>
+        </div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 } 
